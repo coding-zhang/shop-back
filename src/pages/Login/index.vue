@@ -31,11 +31,18 @@
         </el-form-item>
       </el-form>
     </el-card>
+    <!-- 两个用户，权限不同 -->
+    <el-row>
+      <el-row>两个用户，权限不同</el-row>
+      <el-row>用户名：admin 密码：123456</el-row>
+      <el-row>用户名：vip 密码：111</el-row>      
+    </el-row>
   </div>
 </template>
 
 <script>
 import { login } from "@/api/login";
+// import {initDynamicRoutes} from '@/router'
 export default {
   name: "Login",
   data() {
@@ -84,6 +91,9 @@ export default {
 
         // 保存 token
         window.localStorage.setItem("token", res.data.data.token);
+
+        // // 动态路由
+        // initDynamicRoutes()
 
         // 跳转到主页面
         this.$router.push("/home");

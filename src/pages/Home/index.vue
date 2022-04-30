@@ -60,7 +60,8 @@
 </template>
 
 <script>
-import {getNavLists} from '@/api/home'
+import { getNavLists } from "@/api/home";
+import {initDynamicRoutes} from '@/router'
 export default {
   data() {
     return {
@@ -68,9 +69,9 @@ export default {
       // 被激活的链接地址
       activePath: "",
     };
-  },
+  },  
   created() {
-    this.getNav()
+    this.getNav();
     // this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
@@ -78,13 +79,20 @@ export default {
     logout() {
       window.localStorage.clear();
       this.$router.push("/login");
+      window.location.reload()
     },
     // 获取全部菜单
     async getNav() {
-      const res = await getNavLists()
-      // console.log(11, res);      
-      if(res.data.meta.status !== 200) return this.$message.error(res.data.meta.msg)
-      this.menuList = res.data.data
+      const res = await getNavLists();
+      // console.log(11, res);
+      if (res.data.meta.status !== 200)
+        return this.$message.error(res.data.meta.msg);
+      this.menuList = res.data.data;
+
+      // 菜单保存到本地
+      window.localStorage.setItem('menuList', JSON.stringify(res.data.data))
+      // 动态路由
+      initDynamicRoutes()
     },
     // 保存链接的激活状态
     saveNavState(activePath) {

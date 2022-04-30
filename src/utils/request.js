@@ -22,30 +22,31 @@ const request = axios.create({
 });
 
 // 配置 请求拦截器
-request.interceptors.request.use((config) => {
+request.interceptors.request.use((req) => {
   // 拦截成功
-  // console.log(config);
-  // if(config.url !== '/login'){
-  //   // 获取 token
-  //   const token = localStorage.token
-  //   // 将 token 添加到请求头的 Authorization 属性中
-  //   config.headers.Authorization = 'Bearer ' + token
+  // console.log(22, req);
+  if(req.url !== '/login'){
+    // 获取 token
+    const token = window.localStorage.getItem('token')
+    // console.log('token', token);
+    // 将 token 添加到请求头的 Authorization 属性中
+    req.headers.Authorization = 'Bearer ' + token
 
-  //   // 判断非权限范围内的请求
+    // 判断非权限范围内的请求
 
-  //   // 获取当前请求的 请求方式
-  //   const action = actionMapping[config.method]
-  //   // console.log(11, action);
-  //   // 判断此 请求方式 是否和当前用户的路由权限一致
-  //   const currentRight = router.currentRoute.meta
-  //   // console.log('cur', currentRight);
-  //   if(currentRight && currentRight.indexOf(action) === -1){
-  //     // 没有 此种请求方式 的权限
-  //     alert('没有权限')
-  //     return
-  //   }
-  // }
-  return config
+    // 获取当前请求的 请求方式
+    // const action = actionMapping[config.method]
+    // console.log(11, action);
+    // 判断此 请求方式 是否和当前用户的路由权限一致
+    // const currentRight = router.currentRoute.meta
+    // console.log('cur', currentRight);
+    // if(currentRight && currentRight.indexOf(action) === -1){
+      // 没有 此种请求方式 的权限
+      // alert('没有权限')
+      // return
+    // }
+  }
+  return req
 }, (err) => {
   // 拦截失败
   return err;
@@ -56,12 +57,12 @@ request.interceptors.response.use((res) => {
   // 响应成功
 
   // 如果服务器返回的状态码 为 401 ，强制跳转到 login 页面，并且清空本地存储，刷新页面，清空 store 中的数据
-  if(res.status === 401){
-    // console.log(555);
-    router.push('/login')
-    window.localStorage.clear()
-    window.location.reload()
-  }
+  // if(res.status === 401){
+  //   // console.log(555);
+  //   router.push('/login')
+  //   window.localStorage.clear()
+  //   window.location.reload()
+  // }
 
   return res
 }, (err) => {

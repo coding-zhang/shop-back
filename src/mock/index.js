@@ -1,5 +1,5 @@
 const Mock = require('mockjs')
-const {usersData} = require('./usersData')
+const {adminData, vipData} = require('./usersData')
 
 
 Mock.mock('/login', 'post', (req) => {
@@ -46,12 +46,27 @@ Mock.mock('/login', 'post', (req) => {
 // 获取 菜单列表
 Mock.mock('/getNavLists', 'get', (req) => {
   // console.log(33, req);
-  
-  return {
-    data: usersData,
-    meta: {
-      msg: '获取菜单列表成功',
-      status: 200
+  const token = window.localStorage.getItem('token')
+  // console.log(333, token);
+
+  // admin 菜单
+  if(token === 'token-admin'){
+    return {
+      data: adminData,
+      meta: {
+        msg: '获取菜单列表成功',
+        status: 200
+      }
+    }
+  }
+  // vip 菜单
+  if(token === 'token-vip'){
+    return {
+      data: vipData,
+      meta: {
+        msg: '获取菜单列表成功',
+        status: 200
+      }
     }
   }
 
