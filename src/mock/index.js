@@ -1,4 +1,5 @@
 const Mock = require('mockjs')
+const {usersData} = require('./usersData')
 
 
 Mock.mock('/login', 'post', (req) => {
@@ -40,8 +41,20 @@ Mock.mock('/login', 'post', (req) => {
     }
   }
 
+})
 
+// 获取 菜单列表
+Mock.mock('/getNavLists', 'get', (req) => {
+  // console.log(33, req);
+  
+  return {
+    data: usersData,
+    meta: {
+      msg: '获取菜单列表成功',
+      status: 200
+    }
+  }
 
-
+  
 
 })
