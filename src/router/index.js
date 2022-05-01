@@ -95,6 +95,7 @@ export function initDynamicRoutes() {
   // const navLists = store.state.navLists
   const menuList = JSON.parse(window.localStorage.getItem('menuList'))
   // console.log('router',menuList);
+  if(!menuList) return;
 
   menuList.forEach(item => {
     const temp = ruleMapping[item.children[0].path]

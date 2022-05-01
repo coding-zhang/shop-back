@@ -72,7 +72,14 @@ Mock.mock('/getNavLists', 'get', (req) => {
   }
 })
 // 获取 用户列表
-Mock.mock('/getUserList', 'get', () => {
+Mock.mock('/getUserList', 'get', (req) => {
+  
+  const {query} = JSON.parse(req.body)
+  // console.log(33, query);
+  const result = userList.filter(item => {
+    return item.username.includes(query)
+  })
+  // console.log(33, result);
 
   const token = window.localStorage.getItem('token')
   // console.log(333, token);
@@ -80,7 +87,7 @@ Mock.mock('/getUserList', 'get', () => {
   // admin 菜单
   if (token === 'token-admin') {
     return {
-      data: userList,
+      data: result,
       meta: {
         msg: '获取用户列表成功',
         status: 200
@@ -88,6 +95,7 @@ Mock.mock('/getUserList', 'get', () => {
     }
   }
 })
+
 // 添加新用户
 Mock.mock('/addNewUser', 'post', (req) => {
 

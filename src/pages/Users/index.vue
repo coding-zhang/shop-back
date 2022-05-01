@@ -225,7 +225,7 @@ export default {
     // 获取用户列表
     async getUsers() {
       // console.log(111);
-      const res = await getUserList();
+      const res = await getUserList(this.queryInfo);
       // console.log('res', res);
       this.userList = res.data.data;
     },

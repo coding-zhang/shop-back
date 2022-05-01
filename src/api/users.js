@@ -2,10 +2,11 @@ import request from '@/utils/request'
 
 
 // 获取用户列表
-export const getUserList = ()=> {
+export const getUserList = (data)=> {
   return request({
     method: 'GET',
-    url: '/getUserList'    
+    url: '/getUserList',
+    data   
   })
 }
 
