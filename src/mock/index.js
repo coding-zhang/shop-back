@@ -1,6 +1,6 @@
 const Mock = require('mockjs')
 const { adminData, vipData } = require('./usersData')
-const { userList } = require('./userList')
+let { userList } = require('./userList')
 
 
 Mock.mock('/login', 'post', (req) => {
@@ -131,6 +131,136 @@ Mock.mock('/addNewUser', 'post', (req) => {
       meta: {
         msg: '添加用户成功',
         status: 200
+      }
+    }
+  }
+})
+
+// 获取需要修改的用户
+Mock.mock('/getEditUser', 'get', (req) => {
+
+  const user = JSON.parse(req.body)
+  // console.log(33, user);
+  const { id } = user
+
+  const result = userList.filter(item => {
+    return item.id === id
+  })
+
+  // console.log(44, result);
+
+  if (result.length > 0) {
+    return {
+      data: result,
+      meta: {
+        msg: '获取用户成功',
+        status: 200
+      }
+    }
+  } else {    
+    return {      
+      meta: {
+        msg: '获取用户失败',
+        status: 0
+      }
+    }
+  }
+})
+
+// 确定 修改用户
+Mock.mock('/confirmEditUser', 'put', (req) => {
+
+  const user = JSON.parse(req.body)
+  // console.log(33, user);
+  const { id, mobile } = user
+
+  const result = userList.map(item => {
+    if(item.id === id){
+      item.mobile = mobile
+    }
+    return item
+  })
+
+  // console.log(44, result);
+
+  if (result.length > 0) {
+    return {
+      data: result,
+      meta: {
+        msg: '修改用户成功',
+        status: 200
+      }
+    }
+  } else {    
+    return {      
+      meta: {
+        msg: '修改用户失败',
+        status: 0
+      }
+    }
+  }
+})
+
+// 删除用户
+Mock.mock('/deleteUserByID', 'delete', (req) => {
+
+  const user = JSON.parse(req.body)
+  // console.log(33, user);
+  const { id } = user
+
+  userList = userList.filter(item => {
+    return item.id !== id
+  })
+
+  // console.log(44, userList);
+
+  if (userList.length > 0) {
+    return {
+      data: userList,
+      meta: {
+        msg: '删除用户成功',
+        status: 200
+      }
+    }
+  } else {    
+    return {      
+      meta: {
+        msg: '删除用户失败',
+        status: 0
+      }
+    }
+  }
+})
+
+// 修改用户状态
+Mock.mock('/changeUserState', 'put', (req) => {
+
+  const user = JSON.parse(req.body)
+  // console.log(33, user);
+  const { id, state } = user
+
+  const result = userList.map(item => {
+    if(item.id === id){
+      item.mg_state = state
+    }
+    return item
+  })
+
+  // console.log(44, result);
+
+  if (result.length > 0) {
+    return {
+      data: result,
+      meta: {
+        msg: '修改用户状态成功',
+        status: 200
+      }
+    }
+  } else {    
+    return {      
+      meta: {
+        msg: '修改用户状态失败',
+        status: 0
       }
     }
   }
