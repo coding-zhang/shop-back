@@ -70,9 +70,9 @@ export default {
       activePath: "",
     };
   },  
-  created() {
+  mounted() {
     this.getNav();
-    // this.activePath = window.sessionStorage.getItem('activePath')
+    this.activePath = window.localStorage.getItem('activePath')
   },
   methods: {
     // 退出
@@ -96,8 +96,8 @@ export default {
     },
     // 保存链接的激活状态
     saveNavState(activePath) {
-      // window.sessionStorage.setItem('activePath', activePath)
-      // this.activePath = activePath
+      window.localStorage.setItem('activePath', activePath)
+      this.activePath = activePath
     },
   },
 };

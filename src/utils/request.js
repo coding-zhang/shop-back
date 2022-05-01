@@ -35,7 +35,7 @@ request.interceptors.request.use((req) => {
     // 判断非权限范围内的请求
 
     // 获取当前请求的 请求方式
-    // const action = actionMapping[config.method]
+    // const action = actionMapping[req.method]
     // console.log(11, action);
     // 判断此 请求方式 是否和当前用户的路由权限一致
     // const currentRight = router.currentRoute.meta
